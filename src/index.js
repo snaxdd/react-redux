@@ -1,45 +1,17 @@
-import './styles.css';
-import {applyMiddleware, createStore} from 'redux';
-import thunk from 'redux-thunk';
-import {rootReducer} from './redux/rootReducer';
-import {asyncIncrement, changeTheme, decrement, increment} from './redux/actions';
-import logger from 'redux-logger';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import './index.css';
+import App from './App';
+import reportWebVitals from './reportWebVitals';
 
-const counter = document.getElementById('counter');
-const addBtn = document.getElementById('add');
-const subBtn = document.getElementById('sub');
-const asyncBtn = document.getElementById('async');
-const themeBtn = document.getElementById('theme');
-
-const store = createStore(
-  rootReducer,
-  applyMiddleware(thunk, logger)
+ReactDOM.render(
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  document.getElementById('root')
 );
 
-addBtn.addEventListener('click', () => {
-  store.dispatch(increment());
-});
-
-subBtn.addEventListener('click', () => {
-  store.dispatch(decrement());
-});
-
-asyncBtn.addEventListener('click', () => {
-  store.dispatch(asyncIncrement());
-});
-
-store.subscribe(() => {
-  const state = store.getState();
-  counter.textContent = state.counter;
-  document.body.className = state.theme.value;
-});
-
-store.dispatch({type: 'INIT_APP'});
-
-themeBtn.addEventListener('click', () => {
-  const newTheme = document.body.classList.contains('light') ?
-    'dark' : 'light';
-  store.dispatch(changeTheme(newTheme));
-});
-
-
+// If you want to start measuring performance in your app, pass a function
+// to log results (for example: reportWebVitals(console.log))
+// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
+reportWebVitals();
